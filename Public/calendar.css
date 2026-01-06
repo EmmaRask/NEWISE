@@ -1,0 +1,119 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: system-ui, sans-serif;
+}
+
+.calendar h2 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendars {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+
+.calendars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 4rem;
+  max-width: 1200px;
+  margin: auto;
+}
+
+
+
+.day {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: whitesmoke;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 0.9rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.day:hover {
+  background: #eaeaea;
+  transform: scale(1.05);
+}
+
+.calendar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.room-selector {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.room-selector button {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.room-selector button:hover {
+  background: var(--yellow);
+}
+
+
+/* Weekends */
+.weekend {
+  background: var(--yellow);
+  color: #87b768;
+  font-weight: 500;
+}
+
+/* Booked dates */
+.is-booked {
+  background: #bd9321;
+  border-color: #7b4002;
+  color: #b26229;
+  font-weight: 600;
+}
+
+.is-booked:hover {
+    background: #6314bc;
+}
+
+.calendar[data-type="offer"] {
+  background: linear-gradient(
+    135deg,
+    rgba(231, 171, 8, 0.15),
+    rgba(179, 199, 125, 0.15)
+  );
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.calendar[data-type="offer"] .day {
+  background: #fffbe6;
+  border-color: #e7ab08;
+}
+
+.calendar[data-type="offer"] .day:hover {
+  background: #ffe8a3;
+  transform: scale(1.08);
+}
