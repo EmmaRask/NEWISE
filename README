@@ -1,0 +1,79 @@
+# EverShift Hotel
+
+EverShift is a fictional hotel located on the island **NEWISE**, created as part of the Yrgopelag school assignment in web development.
+
+The project is a desktop-only hotel website with a booking system and database storage, integrated with the Yrgopelag central bank API.
+
+## Description
+EverShift allows visitors to book one of the available single rooms for a stay during **January 2026**.
+Guests select dates, room type and optional features, and complete their booking using a transferCode issued by the central bank.
+
+Booking data is validated, stored in a SQL database, and confirmed through the central bank system.
+
+## Island & Hotel
+- **Island:** NEWISE  
+- **Hotel:** EverShift  
+
+## Hotel Rules
+The project follows the required hotel rules:
+- The hotel offers exactly **three single rooms** (budget, standard and luxury)
+- A maximum of **three guests** can stay at the same time
+- Bookings are made through a website form
+- The hotel displays its **star rating**
+
+## Booking Rules
+- Bookings are limited to **January 2026**
+- Check-in time: **15:00**
+- Check-out time: **11:00**
+- Room availability is validated before confirmation
+
+## Features
+The hotel offers selectable features based on the official Yrgopelag feature grid:
+- Water
+- Games
+- Wheels
+- Hotel-specific features
+
+Features are selected during booking and stored together with each reservation.
+
+## Star Rating
+EverShift is built to support a **2–3 star hotel**, with the star rating displayed on the website and included in booking receipts sent to the central bank.
+
+## Tech Stack
+- HTML
+- CSS
+- PHP (strict types enabled)
+- SQL (MySQL / SQLite)
+- JavaScript (minor usage)
+
+## Central Bank Integration
+The project integrates with the Yrgopelag central bank API to:
+- Register island and hotel information
+- Validate transfer codes
+- Deposit payments
+- Submit booking receipts
+
+API credentials are stored securely in a `.env` file.
+
+## Installation
+1. Clone the repository
+2. Set up a local server (XAMPP, MAMP or similar)
+3. Create a `.env` file in the project root:
+4. Ensure `.env` is excluded via `.gitignore`
+5. Set up the database using the provided SQL
+6. Run the project locally in your browser
+
+## Requirements Fulfilled
+- Uses HTML, CSS, PHP and SQL
+- Desktop-only design
+- SQL database integration
+- Strict types enabled in PHP files
+- No PHP warnings, notices or errors
+- At least 20 commits
+- GitHub repository includes README.md and LICENSE
+
+## License
+This project is licensed under the MIT License.
+
+## Author
+Emma Backman 
