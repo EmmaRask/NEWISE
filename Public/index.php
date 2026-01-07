@@ -74,9 +74,22 @@ require_once __DIR__ . "/calendar.php";
 
             <div class="calendar-wrapper">
                 <div class="room-selector">
-                    <button data-room="budget">Budget</button>
-                    <button data-room="standard">Standard</button>
-                    <button data-room="luxury">Luxury</button>
+                    <select name="room-type" id="room-select">
+                        <option value="">Chose Your Room</option>
+                        <option value="Budget">Budget</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Luxury">Luxury</option>
+                    </select>
+                
+                <div class="activity-selector">
+                    <select name="actitivity type" id="feature-select">
+                        <option value="">Chose Your Activity</option>
+                        <option value="Economy">Economy</option>
+                        <option value="Basic">Basic</option>
+                        <option value="Premium">Premium</option>
+                        <option value="Superior">Superior</option>
+                    </select>
+
                 </div>
 
                 <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
