@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+// Inkludera PDO-anslutningen
 require_once __DIR__ . '/connection.php';
 
 /**
@@ -15,7 +16,7 @@ function getBookedDaysForRoom(PDO $pdo, int $roomId): array
 
     $days = [];
 
-    foreach ($stmt->fetchAll() as $booking) {
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $booking) {
         $start = new DateTime($booking['check_in']);
         $end   = new DateTime($booking['check_out']);
 
@@ -25,5 +26,5 @@ function getBookedDaysForRoom(PDO $pdo, int $roomId): array
         }
     }
 
-    return array_unique($days);
+    return array_values(array_unique($days));
 }
