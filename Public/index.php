@@ -120,7 +120,7 @@ require_once __DIR__ . '/features.php';
                         <label for="transfer-code">Transfer-Code</label>
                         <input type="text" name="transfer_code" id="transfer-code" required>
                     </div>
-        
+                    <input type="hidden" name="selected_days" id="selected-days">                        
                     <button type="submit">Submit</button>
                 </form>
 

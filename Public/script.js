@@ -106,3 +106,16 @@ activitySelect.addEventListener('change', () => {
 
     updateActivityCalendar();
 });
+const form = document.querySelector('form');
+const hiddenDaysInput = document.getElementById('selected-days');
+
+form.addEventListener('submit', () => {
+    if (selectedRoomDays.length === 0) {
+        alert('Please select at least one day');
+        event.preventDefault();
+        return;
+    }
+
+    selectedRoomDays.sort((a, b) => a - b);
+    hiddenDaysInput.value = selectedRoomDays.join(',');
+});

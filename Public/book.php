@@ -4,3 +4,6 @@ declare(strict_types=1);
 echo '<pre>';
 var_dump($_POST);
 echo '</pre>';
+
+var_dump($_POST['selected_days']);
+exit;
