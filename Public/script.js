@@ -22,6 +22,14 @@ function updateRoomCalendar() {
         }
     });
 
+  roomDays.forEach(day => {
+  day.addEventListener('click', () => {
+    console.log('Klickade dag:', day.textContent);
+    day.classList.toggle('selected-room');
+  });
+});
+
+
     // Efter att rum valts, uppdatera aktivitetskalendern
     updateActivityCalendar();
 }
