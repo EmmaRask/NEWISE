@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+$pdo = new PDO('sqlite:' . __DIR__ . '/database.sqlite');
 $databasePath = __DIR__ . '/database.sqlite';
 
 try {

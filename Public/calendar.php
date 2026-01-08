@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 
-
-
-
 /**
 * @param string $title
 * @param array<string, array<int>> $roomBookings
@@ -47,7 +44,7 @@ function getActivityBookings(array $featureGrid): array {
     return $bookings;
 }
 
-require_once __DIR__ . '/db/bookings.php';
+require_once __DIR__ . '/../db/bookings.php';
 
 function getBookings(string $type, array $featureGrid = []): array
 {
