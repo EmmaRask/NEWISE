@@ -117,3 +117,10 @@
   background: #ffe8a3;
   transform: scale(1.08);
 }
+.day.selected {
+  background-color: #4CAF50;
+}
+
+.day.active { 
+  border: 2px solid #FF9800; 
+}
