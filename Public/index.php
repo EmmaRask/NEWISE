@@ -84,13 +84,28 @@ require_once __DIR__ . "/calendar.php";
                 <div class="activity-selector">
                     <select name="actitivity type" id="feature-select">
                         <option value="">Chose Your Activity</option>
-                        <option value="Economy">Economy</option>
-                        <option value="Basic">Basic</option>
-                        <option value="Premium">Premium</option>
-                        <option value="Superior">Superior</option>
+                        <option value="Economy">Pool</option>
+                        <option value="Economy">Digiworld</option>
+                        <option value="Basic">Bicykle</option>
+                        <option value="Basic">Narnia</option>
+                        <option value="Premium">Tardis</option>
+                        <option value="Superior">Choose Your Own Portal</option>
                     </select>
-
+                
                 </div>
+
+                <form>
+                    <div class="form-row">
+                        <label for="Fullname">Namn</label>
+                        <input type="Name" id="fullname" name="fullname" placeholder="Write Your Full Name Here Please">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="transfer-code">Transfer-Code</label>
+                        <input type="transfer-code" id="transfer-code" name="transfer-code" placeholder="Your Transfer Code Here Please">
+                     </div>
+                </form>
+                
 
                 <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
             </div>
@@ -99,6 +114,7 @@ require_once __DIR__ . "/calendar.php";
             <?php renderCalendar('Special Offers', getBookings('offer'), 'offer'); ?>
 
         </div>
+        <button type="submit">Submit</button>
     </section>
 
 </main> 
