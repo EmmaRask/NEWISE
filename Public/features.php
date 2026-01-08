@@ -1,6 +1,14 @@
 <?php
 
 declare(strict_types=1);
+$offeredActivities = [
+    'water:economy',
+    'wheels:basic',
+    'portal-travel:economy',
+    'portal-travel:basic',
+    'portal-travel:premium',
+    'portal-travel:superior'
+];
 
 $featureGrid = [
   'water' => [

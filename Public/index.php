@@ -69,7 +69,13 @@ require_once __DIR__ . "/calendar.php";
             <img src="Images/activities/88C57663-7FB2-4C43-B0BD-E055FFFE73A7_1_105_c.jpeg">
         </picture>
     </section>
-    <section class="calendars fullpage-section">
+    
+<?php
+require_once __DIR__ . '/features.php';
+?>
+
+
+ <section class="calendars fullpage-section">
         <div class="calendars-grid">
 
             <div class="calendar-wrapper">
@@ -85,19 +91,22 @@ require_once __DIR__ . "/calendar.php";
                     </div>    
                 
                     <div class="activity-selector">
-                        <select name="activities[]" id="feature-select" multiple>
+                       <select name="activities[]" id="feature-select" multiple>
                             <option value="">Chose Your Activity</option>
-                            <option value="water:economy">Pool</option>
-                            <option value="hotel-specific:economy">Digiworld</option>
-                            <option value="wheels:basic">Bicycle</option>
-                            <option value="hotel-specific:basic">Narnia</option>
-                            <option value="games:premium">Tardis</option>
-                            <option value="hotel-specific:superior">Choose Your Own Portal</option>
+                            <?php foreach ($featureGrid as $category => $tiers): ?>
+                                <?php foreach ($tiers as $tier => $name): ?>
+                                    <?php $key = $category . ':' . $tier; ?>
+                                        <?php if (in_array($key, $offeredActivities, true)) : ?>
+                                    <option value="<?= htmlspecialchars($key) ?>">
+                                        <?= ucfirst($name) ?>
+                                    </option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </select>
-                
+
                     </div>
 
-                
                     <div class="form-row">
                         <label for="fullname">Namn</label>
                         <input type="text" name="guest_name" id="fullname" required>
@@ -110,14 +119,14 @@ require_once __DIR__ . "/calendar.php";
         
                     <button type="submit">Submit</button>
                 </form>
-                
+
                     <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
-                    <?php renderCalendar('Activities & Features', getBookings('activity'), 'activity'); ?>
+                    <?php renderCalendar('Activities & Features', getBookings('activity', $featureGrid), 'activity'); ?>
             
             </div>
         </div>    
-    </section>
-
+</section>
+<script src="script.js"></script>
 </main> 
 
 </body>

@@ -33,7 +33,21 @@ function renderCalendar(string $title, array $bookings, string $type): void
 </div>
 <?php
 }
-function getBookings(string $type): array {
+
+function getActivityBookings(array $featureGrid): array {
+    $bookings = [];
+
+    foreach ($featureGrid as $category => $tiers) {
+        foreach ($tiers as $tier => $name) {
+            // Dummy-data för bokade dagar, kan bytas mot DB senare
+            $bookings[$category . ':' . $tier] = [1, 5, 10]; 
+        }
+    }
+
+    return $bookings;
+}
+
+function getBookings(string $type, array $featureGrid = []): array {
     switch($type) {
         case 'room':
             return [
@@ -42,12 +56,8 @@ function getBookings(string $type): array {
                 'luxury' => [15,16,17]
             ];
         case 'activity':
-            return [
-                'yoga' => [3,10,20],
-                'kayak' => [5,12,19],
-                'hike' => [1,15,28],
-                'spa' => [2,18,25]
-            ];
+            // Använd $featureGrid för att generera bokningar
+            return getActivityBookings($featureGrid);
         case 'offer':
             return [
                 'offer' => [6,13,20]

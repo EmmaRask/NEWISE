@@ -1,20 +1,37 @@
+const roomSelect = document.getElementById('room-select');
 
-const roomButtons = document.querySelectorAll('[data-room]');
+roomSelect.addEventListener('change', () => {
+  const roomType = roomSelect.value;
 
-roomButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const roomType = button.dataset.room;
+  document
+    .querySelectorAll('.calendar[data-type="room"] .day')
+    .forEach(day => {
+      day.classList.remove('is-booked');
 
-    document
-      .querySelectorAll('.calendar[data-type="room"] .day')
-      .forEach(day => {
-        day.classList.remove('is-booked');
+      if (roomType && day.dataset[roomType] === 'booked') {
+        day.classList.add('is-booked');
+      }
+    });
+});
 
-        if (day.dataset[roomType] === 'booked') {
+
+const activitySelect = document.getElementById('feature-select');
+
+activitySelect.addEventListener('change', () => {
+  const selectedActivities = Array.from(activitySelect.selectedOptions)
+                                  .map(option => option.value);
+
+  document
+    .querySelectorAll('.calendar[data-type="activity"] .day')
+    .forEach(day => {
+      day.classList.remove('is-booked');
+
+      selectedActivities.forEach(activity => {
+        if (day.dataset[activity] === 'booked') {
           day.classList.add('is-booked');
         }
       });
-  });
+    });
 });
 
 
