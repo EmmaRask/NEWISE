@@ -27,6 +27,27 @@ $transferCode = $_POST['transfer_code'] ?? '';
 // Konvertera CSV till array med datum
 $selectedDays = array_map('intval', explode(',', $selectedDaysCsv));
 
+$roomMap = [
+    'budget' => 1,
+    'standard' => 2,
+    'luxury' => 3,
+];
+
+$roomId = $roomMap[$room] ?? null;
+
+if (!$roomId) {
+    die('Invalid room selected');
+}
+
+$alreadyBookedDays = getBookedDaysForRoom($pdo, $roomId);
+
+foreach ($selectedDays as $day) {
+    if (in_array($day, $alreadyBookedDays, true)) {
+        die('Room is not available for one or more selected days');
+    }
+}
+
+
 // ---------------------------
 // 3️⃣ Beräkna total kostnad (exempel)
 // ---------------------------
