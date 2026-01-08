@@ -73,48 +73,49 @@ require_once __DIR__ . "/calendar.php";
         <div class="calendars-grid">
 
             <div class="calendar-wrapper">
-                <div class="room-selector">
-                    <select name="room-type" id="room-select">
-                        <option value="">Chose Your Room</option>
-                        <option value="Budget">Budget</option>
-                        <option value="Standard">Standard</option>
-                        <option value="Luxury">Luxury</option>
-                    </select>
-                
-                <div class="activity-selector">
-                    <select name="actitivity type" id="feature-select">
-                        <option value="">Chose Your Activity</option>
-                        <option value="Economy">Pool</option>
-                        <option value="Economy">Digiworld</option>
-                        <option value="Basic">Bicykle</option>
-                        <option value="Basic">Narnia</option>
-                        <option value="Premium">Tardis</option>
-                        <option value="Superior">Choose Your Own Portal</option>
-                    </select>
-                
-                </div>
 
-                <form>
+                <form method="post" action="book.php">
+                    <div class="room-selector">
+                        <select name="room" id="room-select">
+                            <option value="">Chose Your Room</option>
+                            <option value="budget">Budget</option>
+                            <option value="standard">Standard</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>    
+                
+                    <div class="activity-selector">
+                        <select name="activities[]" id="feature-select" multiple>
+                            <option value="">Chose Your Activity</option>
+                            <option value="water:economy">Pool</option>
+                            <option value="hotel-specific:economy">Digiworld</option>
+                            <option value="wheels:basic">Bicycle</option>
+                            <option value="hotel-specific:basic">Narnia</option>
+                            <option value="games:premium">Tardis</option>
+                            <option value="hotel-specific:superior">Choose Your Own Portal</option>
+                        </select>
+                
+                    </div>
+
+                
                     <div class="form-row">
-                        <label for="Fullname">Namn</label>
-                        <input type="Name" id="fullname" name="fullname" placeholder="Write Your Full Name Here Please">
+                        <label for="fullname">Namn</label>
+                        <input type="text" name="guest_name" id="fullname" required>
                     </div>
 
                     <div class="form-row">
                         <label for="transfer-code">Transfer-Code</label>
-                        <input type="transfer-code" id="transfer-code" name="transfer-code" placeholder="Your Transfer Code Here Please">
-                     </div>
+                        <input type="text" name="transfer_code" id="transfer-code" required>
+                    </div>
+        
+                    <button type="submit">Submit</button>
                 </form>
                 
-
-                <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
+                    <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
+                    <?php renderCalendar('Activities & Features', getBookings('activity'), 'activity'); ?>
+            
             </div>
-
-            <?php renderCalendar('Activities & Features', getBookings('activity'), 'activity'); ?>
-            <?php renderCalendar('Special Offers', getBookings('offer'), 'offer'); ?>
-
-        </div>
-        <button type="submit">Submit</button>
+        </div>    
     </section>
 
 </main> 
