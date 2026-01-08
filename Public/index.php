@@ -5,6 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . "/calendar.php";
     $roomBookings = [];
     $activityBookings = [];
+require_once __DIR__ . '/db/connection.php';
+
 
 ?>
 <!DOCTYPE html>

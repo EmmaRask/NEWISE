@@ -47,21 +47,22 @@ function getActivityBookings(array $featureGrid): array {
     return $bookings;
 }
 
-function getBookings(string $type, array $featureGrid = []): array {
-    switch($type) {
+require_once __DIR__ . '/db/bookings.php';
+
+function getBookings(string $type, array $featureGrid = []): array
+{
+    global $pdo;
+
+    switch ($type) {
         case 'room':
             return [
-                'budget' => [2,5,12],
-                'standard' => [8,9,18],
-                'luxury' => [15,16,17]
+                'budget'   => getBookedDaysForRoom($pdo, 1),
+                'standard' => getBookedDaysForRoom($pdo, 2),
+                'luxury'   => getBookedDaysForRoom($pdo, 3),
             ];
         case 'activity':
             // Använd $featureGrid för att generera bokningar
             return getActivityBookings($featureGrid);
-        case 'offer':
-            return [
-                'offer' => [6,13,20]
-            ];
         default:
             return [];
     }
