@@ -5,7 +5,7 @@ require_once __DIR__ . '/../db/connection.php';
 require_once __DIR__ . '/../db/bookings.php';
 
 // ---------------------------
-// 1️⃣ Ladda .env (API-nyckel & användarnamn)
+// Ladda .env (API-nyckel & användarnamn)
 // ---------------------------
 require_once __DIR__ . '/../vendor/autoload.php'; // Om du använder composer + vlucas/phpdotenv
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
@@ -16,7 +16,7 @@ $hotelOwner = $_ENV['CENTRALBANK_USER'] ?? 'defaultUser';
 $hotelApiKey = $_ENV['CENTRALBANK_API_KEY'] ?? 'defaultApiKey';
 
 // ---------------------------
-// 2️⃣ Ta emot POST-data från formuläret
+// Ta emot POST-data från formuläret 
 // ---------------------------
 $room = $_POST['room'] ?? '';
 $selectedDaysCsv = $_POST['selected_days'] ?? '';
@@ -24,7 +24,7 @@ $activities = $_POST['activities'] ?? [];
 $guestName = $_POST['guest_name'] ?? '';
 $transferCode = $_POST['transfer_code'] ?? '';
 
-// Konvertera CSV till array med datum
+// Konvertera CSV -> array med datum
 $selectedDays = array_map('intval', explode(',', $selectedDaysCsv));
 
 $roomMap = [
@@ -49,16 +49,21 @@ foreach ($selectedDays as $day) {
 
 
 // ---------------------------
-// 3️⃣ Beräkna total kostnad (exempel)
+// Beräkna total kostnad 
 // ---------------------------
 $roomPrices = [
-    'standard' => 7,
-    'superior' => 10,
+    'budget' => 3,
+    'standard' => 6,
+    'superior' => 9,
 ];
 $activityPrices = [
-    'portal-travel:premium' => 10,
+    'water:economy' => 2,
+    'wheels:basic' => 5, 
+    'portal-travel:economy' => 2,
     'portal-travel:basic' => 5,
-    // lägg till fler aktiviteter här
+    'portal-travel:premium' => 10,
+    'portal-travel:superior' => 17,
+    
 ];
 
 $totalCost = ($roomPrices[$room] ?? 0) * count($selectedDays);
@@ -70,7 +75,7 @@ foreach ($activities as $act) {
 echo "Total cost: $totalCost\n";
 
 // ---------------------------
-// 4️⃣ Validera transferCode mot centralbanken
+// Validera transferCode mot centralbanken
 // ---------------------------
 $transferData = [
     "transferCode" => $transferCode,
@@ -86,7 +91,6 @@ curl_setopt($ch, CURLOPT_VERBOSE, true);
 
 
 $response = curl_exec($ch);
-// curl_close($ch); // ❌ PHP 8.5+, inte nödvändigt
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 echo "\nHTTP code: $httpCode\n";
 
@@ -101,7 +105,7 @@ if (isset($result['status']) && $result['status'] === 'success') {
     echo "Transfercode validated successfully!\n";
 
     // ---------------------------
-    // 5️⃣ Skapa receipt
+    //  Skapa receipt
     // ---------------------------
     $arrivalDate = date('Y-m-d', strtotime($selectedDays[0] . ' January 2026'));
     $departureDate = date('Y-m-d', strtotime(end($selectedDays) . ' January 2026 +1 day'));
@@ -152,3 +156,61 @@ if (isset($result['status']) && $result['status'] === 'success') {
     echo "Error validating transfer code:\n";
     var_dump($result);
 }
+
+// ---------------------------
+// Deposit
+// ---------------------------
+$depositData = [
+    'user' => $hotelOwner,
+    'transferCode' => $transferCode,
+];
+
+$ch = curl_init('https://www.yrgopelag.se/centralbank/deposit');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($depositData));
+curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+$depositResponse = curl_exec($ch);
+curl_close($ch);
+
+$depositResult = json_decode($depositResponse, true);
+
+if (!isset($depositResult['status']) || $depositResult['status'] !== 'success') {
+    die('Deposit failed');
+}
+
+// ---------------------------
+//  Spara bokningen i DB
+// ---------------------------
+
+// Hämta eller skapa guest
+$stmt = $pdo->prepare('SELECT id FROM guests WHERE name = :name');
+$stmt->execute(['name' => $guestName]);
+$guestId = $stmt->fetchColumn();
+
+if (!$guestId) {
+    $stmt = $pdo->prepare('INSERT INTO guests (name) VALUES (:name)');
+    $stmt->execute(['name' => $guestName]);
+    $guestId = (int)$pdo->lastInsertId();
+}
+$checkInDate = sprintf('2026-01-%02d 15:00:00', min($selectedDays));
+$checkOutDate = sprintf(
+    '2026-01-%02d 11:00:00',
+    max($selectedDays) + 1
+);
+
+$stmt = $pdo->prepare('
+    INSERT INTO bookings (guest_id, room_id, check_in, check_out)
+    VALUES (:guest_id, :room_id, :check_in, :check_out)
+');
+
+$stmt->execute([
+    'guest_id' => $guestId,
+    'room_id' => $roomId,
+    'check_in' => $checkInDate,
+    'check_out' => $checkOutDate,
+]);
+
+$bookingId = (int)$pdo->lastInsertId();
+
+echo "Booking saved with ID: $bookingId<br>";
