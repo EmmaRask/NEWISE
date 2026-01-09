@@ -143,6 +143,17 @@
   background: #ffe8a3;
   transform: scale(1.08);
 }
+
+/* Markerade dagar i rumskalendern */
+.calendar[data-type="room"] .day.selected-room {
+    background-color: var(--green); /* grön */
+    color: white;
+    font-weight: bold;
+}
+.calendar[data-type="room"] .day.selected-room:hover {
+    background-color: #90b359; /* lite mörkare grön */
+}
+
 .day.selected {
   background-color: #4CAF50;
 }

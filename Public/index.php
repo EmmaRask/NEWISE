@@ -124,8 +124,11 @@ require_once __DIR__ . '/features.php';
                     <input type="hidden" name="selected_days" id="selected-days">                        
                     <button type="submit">Book Now</button>
                 </form>
-
+        
+        
+                    <input type="hidden" name="selected_days_room" id="selected-days-room">
                     <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>
+                    <input type="hidden" name="selected_days_activity" id="selected-days-activity">
                     <?php renderCalendar('Activities & Features', getBookings('activity', $featureGrid), 'activity'); ?>
             
             </div>
