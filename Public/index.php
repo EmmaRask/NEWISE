@@ -85,8 +85,7 @@ require_once __DIR__ . '/features.php';
         <div class="calendars-grid">
 
             <div class="calendar-wrapper">
-
-                <form method="post" action="book.php">
+                <form class="booking-form" method="post" action="book.php">
                     <div class="room-selector">
                         <select name="room" id="room-select">
                             <option value="">Chose Your Room</option>
@@ -123,7 +122,7 @@ require_once __DIR__ . '/features.php';
                         <input type="text" name="transfer_code" id="transfer-code" required>
                     </div>
                     <input type="hidden" name="selected_days" id="selected-days">                        
-                    <button type="submit">Submit</button>
+                    <button type="submit">Book Now</button>
                 </form>
 
                     <?php renderCalendar('Room Booking', getBookings('room'), 'room'); ?>

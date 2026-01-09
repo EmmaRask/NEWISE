@@ -27,12 +27,12 @@ nav img {
 }
 
 nav {
-  position: absolute;  /* gör så den kan ligga ovanpå hero */
-  top: 0;             /* längst upp */
+  position: absolute;  
+  top: 0;             
   left: 0;
   width: 100%;
-  padding: 1rem;      /* valfritt, lite luft runt ikonen */
-  z-index: 10;        /* ser till att den ligger ovanpå hero */
+  padding: 1rem;      
+  z-index: 10;        
   display: flex;
   align-items: center;
 }

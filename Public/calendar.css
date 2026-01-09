@@ -1,12 +1,13 @@
 .calendar {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 400px;
+  gap: 1rem;
   font-family: system-ui, sans-serif;
 }
 
 .calendar h2 {
-  font-size: 1rem;
+  font-size: 1.2 rem;
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -19,18 +20,19 @@
 
 .calendars {
   min-height: 100vh;
-  display: grid;
-  align-items: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   padding: 4rem 2rem;
 }
 
 
 .calendars-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 4rem;
-  max-width: 1200px;
-  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 
@@ -54,8 +56,32 @@
 
 .calendar-wrapper {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  flex-direction: row;
+  gap: 4rem;
+  
+}
+
+.booking-form {
+    display: grid;
+    gap: 1.5rem;       
+    padding: 2rem;
+    width: 300px;      
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.booking-form select,
+.booking-form input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.booking-form select[multiple] {
+    min-height: 6rem; 
 }
 
 .room-selector {
