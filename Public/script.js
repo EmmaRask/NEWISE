@@ -14,28 +14,22 @@ let selectedActivities = {};
 function updateRoomCalendar() {
     roomDays.forEach(day => {
         const dayNum = parseInt(day.textContent);
-
         day.classList.remove('selected-room');
         if (selectedRoomDays.includes(dayNum)) {
             day.classList.add('selected-room');
         }
     });
-
-    updateActivityCalendar();
 }
 
 // --- Uppdatera aktivitetskalender ---
 function updateActivityCalendar() {
     activityDays.forEach(day => {
         const dayNum = parseInt(day.textContent);
-
         day.classList.remove('active', 'selected-activity');
 
-        if (selectedRoomDays.includes(dayNum)) {
-            day.classList.add('active');
-            if (selectedActivities[dayNum]) {
-                day.classList.add('selected-activity');
-            }
+        // Markera endast dagar med aktivitet
+        if (selectedActivities[dayNum]) {
+            day.classList.add('active', 'selected-activity');
         }
     });
 }
@@ -44,7 +38,6 @@ function updateActivityCalendar() {
 roomDays.forEach(day => {
     day.addEventListener('click', () => {
         if (day.classList.contains('is-booked')) return;
-
         const dayNum = parseInt(day.textContent);
 
         if (selectedRoomDays.includes(dayNum)) {
@@ -55,6 +48,7 @@ roomDays.forEach(day => {
         }
 
         updateRoomCalendar();
+        updateActivityCalendar(); // Behöver endast uppdatera markerade aktiviteter, inte göra alla dagar aktiva
     });
 });
 
@@ -62,22 +56,25 @@ roomDays.forEach(day => {
 activityDays.forEach(day => {
     day.addEventListener('click', () => {
         const dayNum = parseInt(day.textContent);
+        const selectedOption = activitySelect.selectedOptions[0];
 
-        if (!day.classList.contains('active')) return;
+        if (!selectedOption) return; // inget valt
+        if (!selectedRoomDays.includes(dayNum)) return; // endast för rum-valda dagar
 
-        if (selectedActivities[dayNum]) {
+        // Toggle aktivitet
+        if (selectedActivities[dayNum] === selectedOption.value) {
             delete selectedActivities[dayNum];
         } else {
-            const firstActivity = Array.from(activitySelect.selectedOptions)[0];
-            if (firstActivity) selectedActivities[dayNum] = firstActivity.value;
+            selectedActivities[dayNum] = selectedOption.value;
         }
 
         updateActivityCalendar();
     });
 });
 
-// --- Ändringar i aktivitet-select ---
+// --- Ändringar i activity select ---
 activitySelect.addEventListener('change', () => {
+    // Ta bort aktiviteter som inte längre finns i select
     Object.keys(selectedActivities).forEach(dayNum => {
         const currentValue = selectedActivities[dayNum];
         const found = Array.from(activitySelect.selectedOptions).find(opt => opt.value === currentValue);
@@ -87,7 +84,7 @@ activitySelect.addEventListener('change', () => {
     updateActivityCalendar();
 });
 
-// --- Formulär submission ---
+// --- Formulär submit ---
 form.addEventListener('submit', event => {
     if (selectedRoomDays.length === 0) {
         alert('Please select at least one day');
