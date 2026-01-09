@@ -22,12 +22,16 @@ require_once __DIR__ . '/../db/bookings.php';
 
 </head>
 <body>
-    <nav>
-        <picture class="nav-icon">
-            <img src="nav/icons/pngwing.com (1).png" alt="nav-icon">
-        </picture>
-    </nav>
+    
 <main>
+
+    <section class="legend">
+        <h1>EverShift
+            <img class="inline-icon" src="nav/icons/pngwing.com (1).png" alt="nav-icon">
+        </h1>
+    </section>
+
+
 
 <section class="hero-fullwidth fullpage-section">
     <section class="hero split-section">
@@ -37,8 +41,7 @@ require_once __DIR__ . '/../db/bookings.php';
             </div>   
 
             <aside class="hero-info">
-                <h1>EverShift</h1>
-                <p class="tagline"><i>Wake up to a new horizon, every day!</i></p>
+                <h1>Wake up to a new horizon, every day</h1>
                 <p>
                     Image you could travel not only between in style and comfort but also exoperince all 
                     four climates while doing so! Here at the Evershift we bring that very possibility to life.
@@ -48,7 +51,7 @@ require_once __DIR__ . '/../db/bookings.php';
                     The island of NEWISLE is a magical place andf home to the wandering hotel EverShift, a moving hotel 
                     that takes you on an unforgettable yourney across the realm of snow, ice, sun, rain and soaring blue skies. 
         
-                    Our owner and powersource Calisefer can almost always be meet in the library. Their wishgranting time may be over,
+                    Our owner and powersource Reficlac can almost always be meet in the library. Their wishgranting time may be over,
                     But you never know what they may surprise you with!  Welcome aboard and enyoy the most spectacular place Yrgepelag can offer! 
                 </p>
             </aside>
@@ -58,7 +61,7 @@ require_once __DIR__ . '/../db/bookings.php';
     
     <section class="offers fullpage-section split-section">
         <aside class="offer-info">
-        <h2>Rooms and Activities!</h2>
+        <h2>Rooms and Activities</h2>
         <p>
             Traveling light? We offer rooms for budget traveling vagabonds, standard room if you want to up your 
             comfortability as well as a full luxuray stay for the one who know to enjoy their travels in style and comfort. 
@@ -134,7 +137,20 @@ require_once __DIR__ . '/features.php';
             </div>
         </div>    
 </section>
-<script src="script.js"></script>
+    <?php
+    $heroImages = glob(__DIR__ . '/Images/heroCarousel/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+    $activityImages = glob(__DIR__ . '/Images/activities/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+
+    $heroImages = array_map(fn($img) => 'Images/heroCarousel/' . basename($img), $heroImages);
+    $activityImages = array_map(fn($img) => 'Images/activities/' . basename($img), $activityImages);
+    ?>
+
+    <script>    
+        const heroImages = <?= json_encode($heroImages, JSON_UNESCAPED_SLASHES) ?>;
+        const activityImages = <?= json_encode($activityImages, JSON_UNESCAPED_SLASHES) ?>;
+    </script>
+
+    <script src="script.js"></script>
 </main> 
 
 </body>

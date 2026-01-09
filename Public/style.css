@@ -18,13 +18,21 @@ body {
     color: var(--main-text);
 }
 
-nav img {
+nav img  {
     margin: 2px;
     margin-top: 5px;
     width: 5%;
     height: auto;
     justify-content: left;
 }
+
+.inline-icon {
+    width: 12%;          
+    height: auto;
+    vertical-align: middle;  
+    margin-left: 0.5rem;     
+}
+
 
 nav {
   position: absolute;  
@@ -48,6 +56,28 @@ p {
     padding: 1rem;
 }
 
+.legend {
+    height: 100vh;           
+    width: 100%;
+    background-color: var(--main-bg);  
+    display: flex;
+    justify-content: center;       
+    align-items: center;           
+    
+    scroll-snap-align: start;      
+}
+
+.legend h1 {
+    font-size: 5rem;              
+    color: var(--main-text);
+    font-family: 'Georgia', serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 0;
+    text-align: center;
+}
+
+
 .fullpage-section {
   min-height: 100vh;
   width: 100%;
@@ -62,29 +92,13 @@ p {
   min-height: 100vh;
 }
 
-/* Hero: karusell + text */
+
 .hero {
     min-height: 80vh;  
     display: grid;
     grid-template-columns: 50% 50%;
 
-    /*/gap: 3rem;
-    margin-bottom: 1rem;
-    padding: 1rem;   
-    align-items: start;
-    /*/
 }
-
-/*/.hero::after {
-  content: "↓ Scroll";
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0.5;
-  font-size: 0.9rem;
-}
-/*/
 
 .hero-fullwidth {
   width: 100vw;
@@ -109,17 +123,6 @@ p {
   display:block
 }
 
-
-.hero-info {
-  background-image: url("Images/IMG_1228.JPG");
-  background-size: cover;
-  background-position: center;
-  padding: 6rem 5rem;
-  display: grid;
-  justify-content:center;
-  align-content:start;
-  color: var(--main-bg);
-}
 
 .offer-info{
     background-size: cover;
@@ -146,6 +149,45 @@ p {
   max-width: 45ch;
 }
 
+.hero-info, .offer-info {
+    background: var(--main-bg);
+    padding: 6rem 5rem;         
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1.5rem;
+    border-radius: 12px;
+    color: var(--main-text);
+    line-height: 1.6;
+    font-family: 'Georgia', serif;
+}
+
+.hero-info h1, .offer-info h1, .offer-info h2 {
+    font-family: 'Georgia', serif;
+    font-weight: 400;
+    font-size: 3rem;         
+    margin: 0;
+    color: var(--main-text);
+}
+
+.hero-info .tagline {
+    font-style: italic;
+    font-size: 1.25rem;
+    color: #555;
+}
+
+.hero-info p, .offer-info p {
+    font-size: 1.05rem;
+    color: #444;
+    max-width: 45ch;            
+}
+
+.offer-info h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
 .hero,
 .offers {
   min-height: var(--image-section-height);
@@ -156,12 +198,23 @@ p {
   height: 100%;
 }
 
+.hero-carousel,
+.activityCarousel {
+    position: relative;       
+    overflow: hidden;
+}
+
 .hero-carousel img,
 .activityCarousel img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
 }
 
 
