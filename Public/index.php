@@ -58,15 +58,17 @@ require_once __DIR__ . '/../db/bookings.php';
     
     <section class="offers fullpage-section split-section">
         <aside class="offer-info">
-        <h2>Offers!</h2>
+        <h2>Rooms and Activities!</h2>
         <p>
             Traveling light? We offer rooms for budget traveling vagabonds, standard room if you want to up your 
             comfortability as well as a full luxuray stay for the one who know to enjoy their travels in style and comfort. 
-            Right now you can stay at our bugdet friendly room and get an activity for free!
-            Want to enjoy all NEWISE have to offer? 
             
-            Then consider our lux package weekend stay, our luxury room and 
-            one actitivity a day included in the price! Book now to not miss out this January!
+            To make your stay at the EverShift more eventfull we of course offer activites. We are proud to boast out travel-portal 
+            where we have selected some popular portalworlds to explore. Maybe with a bicykle and a picnick in the Digiworld? 
+            Or se if you are lucky to meet Aslan in Narnia or just a friendly faun? We have a large library to explore if you prefere to stay 
+            at the hotel and just study up on the worlds beyond by candle light. Then maybe a plunge in our pool would suit you better? 
+
+            Explore our selection and welcome to your most magical stay yet! 
         </p>
         </aside>
         <picture class="activityCarousel">
