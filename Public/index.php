@@ -137,6 +137,13 @@ require_once __DIR__ . '/features.php';
             </div>
         </div>    
 </section>
+
+<section class="room-gallery">
+    <img src="Images/hotelrooms/budget-bunks.jpg" alt="Budget room">
+    <img src="Images/hotelrooms/standard.jpg" alt="Standard room">
+    <img src="Images/hotelrooms/luxury.jpg" alt="Luxury room">
+</section>
+
     <?php
     $heroImages = glob(__DIR__ . '/Images/heroCarousel/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
     $activityImages = glob(__DIR__ . '/Images/activities/*.{jpg,jpeg,png,gif}', GLOB_BRACE);

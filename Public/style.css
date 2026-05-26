@@ -225,7 +225,29 @@ p {
     grid-template-columns: 50% 50%; 
 }
 
+.room-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
 
+    width: 100%;
+    max-width: 1200px;
+
+    margin: -10rem auto 4rem;
+    padding: 0 5rem;
+}
+.room-gallery img {
+    width: 32%;
+    max-width: 340px;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+}
 
 
 

@@ -194,7 +194,9 @@ if (!$guestId) {
 }
 
 $checkIn = sprintf('2026-01-%02d 15:00:00', min($selectedDays));
-$checkOut = sprintf('2026-01-%02d 11:00:00', max($selectedDays) + 1);
+$checkOutDate = new DateTime(sprintf('2026-01-%02d 11:00:00', max($selectedDays)));
+$checkOutDate->modify('+1 day');
+$checkOut = $checkOutDate->format('Y-m-d H:i:s');
 
 $stmt = $pdo->prepare(
     'INSERT INTO bookings (guest_id, room_id, check_in, check_out)
