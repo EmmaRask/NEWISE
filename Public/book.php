@@ -83,7 +83,7 @@ $transferData = [
     'totalCost' => $totalCost,
 ];
 
-$ch = curl_init('https://www.yrgopelag.se/centralbank/transferCode');
+$ch = curl_init('https://yrgopelag.se/centralbank/transferCode');
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_POSTFIELDS => json_encode($transferData),
