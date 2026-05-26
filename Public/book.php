@@ -1,9 +1,14 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 require_once __DIR__ . '/../db/connection.php';
 require_once __DIR__ . '/../db/bookings.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+
 
 // ---------------------------
 // Ladda .env (Centralbank credentials)
@@ -19,7 +24,7 @@ $hotelApiKey = $_ENV['CENTRALBANK_API_KEY'] ?? '';
 // ---------------------------
 $room = $_POST['room'] ?? '';
 $selectedDaysCsv = $_POST['selected_days'] ?? '';
-$activities = $_POST['activities'] ?? [];
+$activities = array_filter($_POST['activities'] ?? [], fn($act) => $act !== '');
 $guestName = $_POST['guest_name'] ?? '';
 $transferCode = $_POST['transfer_code'] ?? '';
 
@@ -52,17 +57,17 @@ foreach ($selectedDays as $day) {
 $roomPrices = [
     'budget' => 3,
     'standard' => 6,
-    'superior' => 9,
+    'luxury' => 9,
 ];
 
 $activityPrices = [
     'water:economy' => 2,
     'wheels:basic' => 5,
-    'portal-travel:economy' => 2,
-    'portal-travel:basic' => 5,
-    'portal-travel:premium' => 10,
-    'portal-travel:superior' => 17,
-];
+    'hotel-specific:economy' => 2,
+    'hotel-specific:basic' => 5,
+    'hotel-specific:premium' => 10,
+    'hotel-specific:superior' => 17
+    ];
 
 $totalCost = ($roomPrices[$room] ?? 0) * count($selectedDays);
 
@@ -127,27 +132,53 @@ curl_setopt_array($ch, [
 curl_exec($ch);
 // Centralbanken kan returnera tom body vid success
 
+
+
 // ---------------------------
 // Deposit
 // ---------------------------
+// 
+
 $depositData = [
     'user' => $hotelOwner,
+    'api_key' => $hotelApiKey,
     'transferCode' => $transferCode,
 ];
 
-$ch = curl_init('https://www.yrgopelag.se/centralbank/deposit');
+$ch = curl_init('https://yrgopelag.se/centralbank/deposit');
 curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_POSTFIELDS => json_encode($depositData),
-    CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => http_build_query($depositData),
+    CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
 ]);
 
 $depositResponse = curl_exec($ch);
+$depositHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+if (curl_errno($ch)) {
+    die('Deposit curl error: ' . curl_error($ch));
+}
+
 $depositResult = json_decode($depositResponse, true);
 
 if (!isset($depositResult['status']) || $depositResult['status'] !== 'success') {
-    die('Deposit failed');
+    echo '<pre>';
+    echo 'DEPOSIT FAILED' . PHP_EOL;
+    echo 'HTTP code: ';
+    var_dump($depositHttpCode);
+    echo 'Hotel owner from .env: ';
+    var_dump($hotelOwner);
+    echo 'Transfer code: ';
+    var_dump($transferCode);
+    echo 'Raw response:' . PHP_EOL;
+    var_dump($depositResponse);
+    echo 'Decoded response:' . PHP_EOL;
+    var_dump($depositResult);
+    echo '</pre>';
+    exit;
 }
+
 
 // ---------------------------
 // Spara bokningen i DB
@@ -176,5 +207,36 @@ $stmt->execute([
     'check_in' => $checkIn,
     'check_out' => $checkOut,
 ]);
+
+$bookingId = (int) $pdo->lastInsertId();
+
+foreach ($activities as $act) {
+    if ($act === '' || !str_contains($act, ':')) {
+        continue;
+    }
+
+    [$activity, $tier] = explode(':', $act);
+
+    $stmt = $pdo->prepare(
+        'SELECT id FROM features WHERE category = :category AND tier = :tier'
+    );
+    $stmt->execute([
+        'category' => $activity,
+        'tier' => $tier,
+    ]);
+
+    $featureId = $stmt->fetchColumn();
+
+    if ($featureId) {
+        $stmt = $pdo->prepare(
+            'INSERT INTO booking_features (booking_id, feature_id)
+             VALUES (:booking_id, :feature_id)'
+        );
+        $stmt->execute([
+            'booking_id' => $bookingId,
+            'feature_id' => $featureId,
+        ]);
+    }
+}
 
 echo 'Booking completed successfully';

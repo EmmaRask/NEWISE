@@ -1,13 +1,14 @@
 <?php
 
 declare(strict_types=1);
+
 $offeredActivities = [
     'water:economy',
     'wheels:basic',
-    'portal-travel:economy',
-    'portal-travel:basic',
-    'portal-travel:premium',
-    'portal-travel:superior'
+    'hotel-specific:economy',
+    'hotel-specific:basic',
+    'hotel-specific:premium',
+    'hotel-specific:superior'
 ];
 
 $featureGrid = [
@@ -29,7 +30,7 @@ $featureGrid = [
       'premium' => 'trike',
       'superior' => 'four-wheeled motorized beast'
   ],
-  'portal-travel' => [
+  'hotel-specific' => [
       'economy' => 'digiworld',
       'basic' => 'narnia',
       'premium' => 'tardis',

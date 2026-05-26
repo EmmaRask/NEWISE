@@ -92,9 +92,9 @@ require_once __DIR__ . '/features.php';
                     <div class="room-selector">
                         <select name="room" id="room-select">
                             <option value="">Chose Your Room</option>
-                            <option value="budget">Budget</option>
-                            <option value="standard">Standard</option>
-                            <option value="luxury">Luxury</option>
+                            <option value="budget">Budget - 3 credits/night</option>
+                            <option value="standard">Standard - 6 credits/night </option>
+                            <option value="luxury">Luxury - 9 credits/night</option>
                         </select>
                     </div>    
                 
@@ -116,7 +116,7 @@ require_once __DIR__ . '/features.php';
                     </div>
 
                     <div class="form-row">
-                        <label for="fullname">Namn</label>
+                        <label for="fullname">Name</label>
                         <input type="text" name="guest_name" id="fullname" required>
                     </div>
 
